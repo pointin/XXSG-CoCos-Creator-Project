@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-08-26 13:43:05
- * @LastEditTime: 2019-08-28 10:15:03
+ * @LastEditTime: 2019-09-17 10:19:20
  * @LastEditors: Please set LastEditors
  */
 cc.Class({

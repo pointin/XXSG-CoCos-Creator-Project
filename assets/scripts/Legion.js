@@ -2,14 +2,13 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-08-23 14:20:51
- * @LastEditTime: 2019-08-29 11:12:10
+ * @LastEditTime: 2019-09-17 10:29:12
  * @LastEditors: Please set LastEditors
  */
 cc.Class({
     extends: cc.Component,
 
     properties: {
-        armyNode:[cc.Node],
         moveLabel:cc.Label,
         numLabel:cc.Label,
         lineNode:cc.Node
@@ -108,24 +107,45 @@ cc.Class({
      * @return: 无
      */    
     createArmy:function (msg){
-        let aNode = this.node.getChildByName('army')
+        let aNode = this.node.getChildByName('army');
+        this.armyNode = [];
         for(let i = 0;i<msg.length;i++){
             //上次写到这！！！！！！！
             //接受军团信息，生成军团下army节点内的军队节点，并赋值给this.armyNode,然后渲染每个军队
             //然后写军团内阵容变化的动画。。。。。就是changeLegion函数
-
-
-
-
-
-
-
-
-
-
-
-
+            let selfNode = new cc.Node(msg[i].name);
+            let nodeNum = new cc.Node('numLabel');
+            let nodeType = new cc.Node('typeLabel');
+            selfNode.parent = aNode;
+            nodeNum.parent = selfNode;
+            nodeType.parent = selfNode;
+            let a = selfNode.addComponent('Army');
+            let aMsg = {};
+            if(msg[i].name==='枪兵'){
+                aMsg = Infantry;
+            }else if(msg[i].name==='步兵'){
+                aMsg = Spearman;
+            }else if(msg[i].name==='骑兵'){
+                aMsg = Cavalry;
+            }else if(msg[i].name==='弓兵'){
+                aMsg = Bowmen;
+            }
+            a.type=msg[i].name;
+            a.num=msg[i].num;
+            a.speed=aMsg.speed;
+            a.demage=aMsg.demage;
+            a.numLabel = nodeNum;
+            a.typeLabel = nodeType;
+            selfNode.color=aMsg.color;
+            selfNode.setPosition((100/(msg.length*2))*(3-2*i),0);
+            selfNode.height=100;
+            selfNode.width=100/msg.length;
+            this.armyNode.push(selfNode);
+            cc.log(selfNode)
         }
+        
+        // cc.log(aNode);
+        // cc.log(this.armyNode);
     },
 
     /**
